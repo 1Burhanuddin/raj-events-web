@@ -9,15 +9,15 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/
 import { Alert, AlertDescription } from './ui/alert';
 import { AlertCircle, CheckCircle2, Loader2 } from 'lucide-react';
 
-const DeleteAccount = () => {
+const DeleteAccount: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState({ type: '', text: '' });
+  const [message, setMessage] = useState<{ type: 'success' | 'error' | ''; text: string }>({ type: '', text: '' });
 
-  const handleDeleteAccount = async (e) => {
+  const handleDeleteAccount = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
+
     if (!email || !password) {
       setMessage({ type: 'error', text: 'Please enter both email and password.' });
       return;
@@ -31,7 +31,7 @@ const DeleteAccount = () => {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
-      // Step 2: Delete user document from Firestore
+      // Step 2: Delete user document from Firestore (if exists)
       try {
         const userDocRef = doc(db, 'users', user.uid);
         await deleteDoc(userDocRef);
@@ -43,29 +43,29 @@ const DeleteAccount = () => {
       await deleteUser(user);
 
       // Success
-      setMessage({ 
-        type: 'success', 
-        text: 'Your account and all associated data have been permanently deleted.' 
+      setMessage({
+        type: 'success',
+        text: 'Your account and all associated data have been permanently deleted.'
       });
       setEmail('');
       setPassword('');
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error deleting account:', error);
-      
+
       let errorMessage = 'An error occurred while deleting your account.';
-      
-      if (error.code === 'auth/user-not-found') {
+
+      if (error?.code === 'auth/user-not-found') {
         errorMessage = 'No account found with this email address.';
-      } else if (error.code === 'auth/wrong-password') {
+      } else if (error?.code === 'auth/wrong-password') {
         errorMessage = 'Incorrect password. Please try again.';
-      } else if (error.code === 'auth/invalid-email') {
+      } else if (error?.code === 'auth/invalid-email') {
         errorMessage = 'Invalid email address format.';
-      } else if (error.code === 'auth/too-many-requests') {
+      } else if (error?.code === 'auth/too-many-requests') {
         errorMessage = 'Too many failed attempts. Please try again later.';
-      } else if (error.code === 'auth/requires-recent-login') {
+      } else if (error?.code === 'auth/requires-recent-login') {
         errorMessage = 'This operation requires recent authentication. Please sign in again.';
       }
-      
+
       setMessage({ type: 'error', text: errorMessage });
     } finally {
       setLoading(false);
@@ -97,7 +97,7 @@ const DeleteAccount = () => {
                 required
               />
             </div>
-            
+
             <div className="space-y-2">
               <Label htmlFor="password">Password</Label>
               <Input
@@ -112,13 +112,13 @@ const DeleteAccount = () => {
             </div>
 
             {message.text && (
-              <Alert className={message.type === 'success' ? 'border-green-500' : 'border-destructive'}>
+              <Alert className={message.type === 'success' ? '' : 'border-destructive'}>
                 {message.type === 'success' ? (
-                  <CheckCircle2 className="h-4 w-4 text-green-500" />
+                  <CheckCircle2 className="h-4 w-4" />
                 ) : (
                   <AlertCircle className="h-4 w-4 text-destructive" />
                 )}
-                <AlertDescription className={message.type === 'success' ? 'text-green-700' : ''}>
+                <AlertDescription>
                   {message.text}
                 </AlertDescription>
               </Alert>
