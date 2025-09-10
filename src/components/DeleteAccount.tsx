@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { signInWithEmailAndPassword, deleteUser } from 'firebase/auth';
 import { doc, deleteDoc } from 'firebase/firestore';
 import { auth, db } from '../lib/firebase';
@@ -14,6 +14,10 @@ const DeleteAccount: React.FC = () => {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error' | ''; text: string }>({ type: '', text: '' });
+
+  useEffect(() => {
+    console.log('DeleteAccount mounted');
+  }, []);
 
   const handleDeleteAccount = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
