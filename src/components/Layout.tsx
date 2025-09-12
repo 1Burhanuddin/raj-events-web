@@ -1,0 +1,39 @@
+import { Link } from "react-router-dom";
+
+interface LayoutProps {
+  children: React.ReactNode;
+}
+
+export const Layout = ({ children }: LayoutProps) => {
+  return (
+    <div className="min-h-screen flex flex-col overflow-x-hidden">
+      {/* Header */}
+      <header className="bg-lime-400 text-black py-4 px-4 shadow-md w-full">
+        <div className="max-w-7xl mx-auto w-full px-4">
+          <Link to="/" className="text-xl font-bold">
+            RajEvents
+          </Link>
+        </div>
+      </header>
+
+      {/* Main Content */}
+      <main className="flex-1 w-full">
+        <div className="w-screen mx-auto">
+          {children}
+        </div>
+      </main>
+
+      {/* Footer */}
+      <footer className="bg-muted py-4 px-4 border-t w-full">
+        <div className="max-w-7xl mx-auto w-full px-4 text-sm text-muted-foreground">
+          <div className="flex items-center justify-center border-b-2 pb-2">
+            <span>© {new Date().getFullYear()} RajEvents. All rights reserved.</span>
+          </div>
+          <Link to="/delete-account" className="text-destructive hover:underline flex items-center justify-center pt-2">
+            Delete Account
+          </Link>
+        </div>
+      </footer>
+    </div>
+  );
+};
