@@ -10,8 +10,17 @@ export const Layout = ({ children }: LayoutProps) => {
       {/* Header */}
       <header className="bg-lime-400 text-black py-4 px-4 shadow-md w-full">
         <div className="max-w-7xl mx-auto w-full px-4">
-          <Link to="/" className="text-xl font-bold">
-            RajEvents
+          <Link to="/" className="flex items-center space-x-3 w-fit">
+            <div className="bg-white p-2 rounded-full">
+              <img 
+                src="/app_logo_dark.png" 
+                alt="RajEvents Logo" 
+                className="h-10 w-auto brightness-0 contrast-200"
+              />
+            </div>
+            <span className="text-2xl font-bold text-gray-800">
+              RajEvents
+            </span>
           </Link>
         </div>
       </header>
