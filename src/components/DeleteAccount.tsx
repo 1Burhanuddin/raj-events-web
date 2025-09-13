@@ -45,7 +45,6 @@ const DeleteAccount = () => {
     setShowConfirmDialog(true);
   };
 
-  // Start the countdown when delete is confirmed
   const startDeleteCountdown = () => {
     setCountdown(5);
     countdownRef.current = setInterval(() => {
@@ -60,7 +59,6 @@ const DeleteAccount = () => {
     }, 1000);
   };
 
-  // Cancel the countdown if user clicks undo
   const cancelDelete = () => {
     if (countdownRef.current) {
       clearInterval(countdownRef.current);
@@ -70,9 +68,7 @@ const DeleteAccount = () => {
     setShowConfirmDialog(false);
   };
 
-  // Handle the actual account deletion
   const handleDeleteAccount = async () => {
-    // Clear any existing countdown
     if (countdownRef.current) {
       clearInterval(countdownRef.current);
       countdownRef.current = null;
@@ -84,11 +80,9 @@ const DeleteAccount = () => {
     setMessage({ type: '', text: '' });
 
     try {
-      // Step 1: Sign in the user
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
-      // Step 2: Delete user document from Firestore (if exists)
       try {
         const userDocRef = doc(db, 'users', user.uid);
         await deleteDoc(userDocRef);
@@ -96,7 +90,6 @@ const DeleteAccount = () => {
         console.log('User document may not exist or already deleted:', firestoreError);
       }
 
-      // Step 3: Delete the user account from Firebase Auth
       await deleteUser(user);
 
       setMessage({
@@ -153,7 +146,6 @@ const DeleteAccount = () => {
           errorMessage = 'The email or password you entered is incorrect. Please try again.';
           break;
         default:
-          // If it's a Firestore error
           if (error?.code === 'permission-denied') {
             errorTitle = 'Permission Denied';
             errorMessage = 'You do not have permission to perform this action.';
