@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 // @ts-ignore
 import DeleteAccount from "./components/DeleteAccount";
 import Dashboard from "./components/Dashboard";
+import Contact from "./components/Contact";
 import { Layout } from "./components/Layout";
 
 const queryClient = new QueryClient();
@@ -17,6 +18,7 @@ const App = () => (
         <Layout>
           <Routes>
             <Route path="/" element={<Dashboard />} />
+            <Route path="/contact" element={<Contact />} />
             <Route path="/delete-account" element={<DeleteAccount />} />
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>

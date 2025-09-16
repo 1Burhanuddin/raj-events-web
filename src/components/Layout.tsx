@@ -9,8 +9,8 @@ export const Layout = ({ children }: LayoutProps) => {
     <div className="min-h-screen flex flex-col overflow-x-hidden">
       {/* Header */}
       <header className="bg-lime-400 text-black py-4 px-4 shadow-md w-full">
-        <div className="max-w-7xl mx-auto w-full px-4">
-          <Link to="/" className="flex items-center space-x-3 w-fit">
+        <div className="max-w-7xl mx-auto w-full px-4 flex justify-between items-center">
+          <Link to="/" className="flex items-center space-x-3">
             <div className="bg-white p-2 rounded-full">
               <img 
                 src="/app_logo_dark.png" 
@@ -22,6 +22,18 @@ export const Layout = ({ children }: LayoutProps) => {
               RajEvents
             </span>
           </Link>
+          <nav>
+            <ul className="flex space-x-6">
+              <li>
+                <Link 
+                  to="/contact" 
+                  className="text-gray-800 hover:text-gray-600 font-medium transition-colors"
+                >
+                  Contact Us
+                </Link>
+              </li>
+            </ul>
+          </nav>
         </div>
       </header>
 
